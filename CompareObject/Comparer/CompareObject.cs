@@ -22,7 +22,7 @@ namespace CompareObj
     using System.Diagnostics;
     using System.Reflection;
 
-    [DebuggerStepThrough]
+    //[DebuggerStepThrough]
     [Serializable]
     public static class CompareObject
     {

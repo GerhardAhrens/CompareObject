@@ -14,11 +14,17 @@
 namespace CompareObj
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.Globalization;
 
-    [DebuggerStepThrough]
+    using Microsoft.VisualBasic;
+
+    //[DebuggerStepThrough]
     [Serializable]
-    [DebuggerDisplay("Object={ObjectName}, PropertyName={PropertyName}, PropertyTyp={PropertyTyp}")]
+    [DebuggerDisplay("Object={this.ObjectName}, PropertyName={this.PropertyName}, PropertyTyp={this.PropertyTyp}")]
     public class CompareResult
     {
         public CompareResult(string name, object firstValue, object secondValue)
@@ -105,7 +111,42 @@ namespace CompareObj
 
         private string NullToString(object value)
         {
-            return string.IsNullOrEmpty(value.ToString()) ==true ? "null" : value.ToString();
+            if (value?.GetType().IsGenericType == true)
+            {
+                if (value.GetType().GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    return "null";
+                }
+                else if (value.GetType().GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    var property = typeof(ICollection).GetProperty("Count");
+                    int count = (int)property.GetValue(value, null);
+                    string propertyContent = $"List<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
+                    return propertyContent;
+                }
+                else if (value.GetType().GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                {
+                    var property = typeof(ICollection).GetProperty("Count");
+                    int count = (int)property.GetValue(value, null);
+                    string propertyContent = $"List<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
+                    return propertyContent;
+                }
+                else if (value.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>))
+                {
+                    var property = typeof(ICollection).GetProperty("Count");
+                    int count = (int)property.GetValue(value, null);
+                    string propertyContent = $"List<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
+                    return propertyContent;
+                }
+                else
+                {
+                    return string.IsNullOrEmpty(value.ToString()) == true ? "null" : value.ToString();
+                }
+            }
+            else
+            {
+                return string.IsNullOrEmpty(value?.ToString()) == true ? "null" : value.ToString();
+            }
         }
     }
 }
