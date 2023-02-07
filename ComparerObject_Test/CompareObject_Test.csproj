@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CompareObject\ComparerObject.csproj" />
+    <ProjectReference Include="..\CompareObject\CompareObject.csproj" />
   </ItemGroup>
 
 </Project>
