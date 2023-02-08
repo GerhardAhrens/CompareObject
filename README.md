@@ -1,6 +1,6 @@
 # Compare Object
 
-Der Object Comparer besteht aus den Klassen **CompareObject** und **CompareResult**. Die Klasse dient dazu zwei Objekte des gleichen Types zu vergleichen und das Ergebnis über die Klasse **CompareResult** zurückgeben. 
+Der Object Comparer besteht aus den Klassen **CompareObject** und **CompareResult**. Die Klasse dient dazu zwei Objekte des gleichen Types zu vergleichen und das Ergebnis Ã¼ber die Klasse **CompareResult** zurÃ¼ckgeben. 
 
 ```csharp
 Person CurrentPerson = new Person();
@@ -38,3 +38,5 @@ foreach (CompareResult item in compareResult)
 
 <img src="./CompareObjectResult.png" style="hight:500; height: 80px;"/>
 
+Bisher funktioniert noch kein "Deep"-Compare, damit ist gemeint, das auch Objekte in Objekte und Collections auf Unterschiede geprÃ¼ft werden.
+Ist in einem Objekt eine oder mehrere Collection definiert, wird hier der Count dazu ausgegeben.
