@@ -111,41 +111,67 @@ namespace CompareObj
 
         private string NullToString(object value)
         {
-            if (value?.GetType().IsGenericType == true)
+            try
             {
-                if (value.GetType().GetGenericTypeDefinition() == typeof(Nullable<>))
+                if (value?.GetType().IsGenericType == true)
                 {
-                    return "null";
-                }
-                else if (value.GetType().GetGenericTypeDefinition() == typeof(List<>))
-                {
-                    var property = typeof(ICollection).GetProperty("Count");
-                    int count = (int)property.GetValue(value, null);
-                    string propertyContent = $"List<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
-                    return propertyContent;
-                }
-                else if (value.GetType().GetGenericTypeDefinition() == typeof(IEnumerable<>))
-                {
-                    var property = typeof(ICollection).GetProperty("Count");
-                    int count = (int)property.GetValue(value, null);
-                    string propertyContent = $"List<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
-                    return propertyContent;
-                }
-                else if (value.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>))
-                {
-                    var property = typeof(ICollection).GetProperty("Count");
-                    int count = (int)property.GetValue(value, null);
-                    string propertyContent = $"List<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
-                    return propertyContent;
+                    if (value.GetType().GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        return "null";
+                    }
+                    else if (value.GetType().GetGenericTypeDefinition() == typeof(List<>))
+                    {
+                        var property = typeof(ICollection).GetProperty("Count");
+                        int count = (int)property.GetValue(value, null);
+                        string propertyContent = $"List<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
+                        return propertyContent;
+                    }
+                    else if (value.GetType().GetGenericTypeDefinition() == typeof(HashSet<>))
+                    {
+                        var property = typeof(ICollection).GetProperty("Count");
+                        int count = (int)property.GetValue(value, null);
+                        string propertyContent = $"HashSet<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
+                        return propertyContent;
+                    }
+                    else if (value.GetType().GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                    {
+                        var property = typeof(ICollection).GetProperty("Count");
+                        int count = (int)property.GetValue(value, null);
+                        string propertyContent = $"IEnumerable<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
+                        return propertyContent;
+                    }
+                    else if (value.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>))
+                    {
+                        var property = typeof(ICollection).GetProperty("Count");
+                        int count = (int)property.GetValue(value, null);
+                        string propertyContent = $"ObservableCollection<{value.GetType().GetGenericArguments()[0].Name}>; Count={count} ";
+                        return propertyContent;
+                    }
+                    else if (value.GetType().GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                    {
+                        var property = typeof(ICollection).GetProperty("Count");
+                        int count = (int)property.GetValue(value, null);
+
+                        string dictKey = value.GetType().GetGenericArguments()[0].Name;
+                        string dictValue = value.GetType().GetGenericArguments()[1].Name;
+
+                        string propertyContent = $"Dictionary<{dictKey},{dictValue}>; Count={count} ";
+                        return propertyContent;
+                    }
+                    else
+                    {
+                        return string.IsNullOrEmpty(value.ToString()) == true ? "null" : value.ToString();
+                    }
                 }
                 else
                 {
-                    return string.IsNullOrEmpty(value.ToString()) == true ? "null" : value.ToString();
+                    return string.IsNullOrEmpty(value?.ToString()) == true ? "null" : value.ToString();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return string.IsNullOrEmpty(value?.ToString()) == true ? "null" : value.ToString();
+                string errorText = ex.Message;
+                throw;
             }
         }
     }

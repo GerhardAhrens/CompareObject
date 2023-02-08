@@ -57,6 +57,10 @@ namespace CompareObj
                         {
                             propertyType = $"List<{property.PropertyType.GetGenericArguments()[0].Name}>";
                         }
+                        else if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(HashSet<>))
+                        {
+                            propertyType = $"List<{property.PropertyType.GetGenericArguments()[0].Name}>";
+                        }
                         else if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
                         {
                             propertyType = $"IEnumerable<{property.PropertyType.GetGenericArguments()[0].Name}>";
@@ -64,6 +68,12 @@ namespace CompareObj
                         else if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(ObservableCollection<>))
                         {
                             propertyType = $"ObservableCollection<{property.PropertyType.GetGenericArguments()[0].Name}>";
+                        }
+                        else if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                        {
+                            string key = property.PropertyType.GetGenericArguments()[0].Name;
+                            string value = property.PropertyType.GetGenericArguments()[1].Name;
+                            propertyType = $"Dictionary<{key},{value}>";
                         }
                         else
                         {

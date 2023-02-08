@@ -47,6 +47,9 @@ namespace CompareObj
             CurrentPerson.Department = deptList;
             oldPerson.Department = null;
 
+            CurrentPerson.Roles = new Dictionary<int, string>() { { 1, "Developer" } };
+
+
             string[] ignorProperty = new IgnorWords().IgnorPropertiesAsArray;
             List<CompareResult> compareResult = CompareObject.GetDifferences(CurrentPerson, oldPerson, ignorProperty);
 
@@ -71,6 +74,8 @@ namespace CompareObj
             public DateTime? MeetingDate { get; set; }
 
             public List<Department> Department { get; set; }
+
+            public Dictionary<int,string> Roles { get; set; }
         }
 
         public class Department
