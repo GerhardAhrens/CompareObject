@@ -18,11 +18,8 @@ namespace CompareObj
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
-    using System.Globalization;
 
-    using Microsoft.VisualBasic;
-
-    //[DebuggerStepThrough]
+    [DebuggerStepThrough]
     [Serializable]
     [DebuggerDisplay("Object={this.ObjectName}, PropertyName={this.PropertyName}, PropertyTyp={this.PropertyTyp}")]
     public class CompareResult
@@ -162,6 +159,12 @@ namespace CompareObj
                     {
                         return string.IsNullOrEmpty(value.ToString()) == true ? "null" : value.ToString();
                     }
+                }
+                else if (value != null && value.GetType().IsEnum == true)
+                {
+                    int enumValue = Convert.ToInt32(value);
+                    string propertyContent = $"Enum.{value.GetType().Name}={value}[{enumValue}]";
+                    return propertyContent;
                 }
                 else
                 {

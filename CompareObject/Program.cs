@@ -17,6 +17,7 @@
 namespace CompareObj
 {
     using System;
+    using System.Security;
 
     public class Program
     {
@@ -27,6 +28,7 @@ namespace CompareObj
             Console.Clear();
 
             Person CurrentPerson = new Person();
+            CurrentPerson.Status = Status.Aktiv;
             CurrentPerson.PersonId = 13;
             CurrentPerson.Name = "Gerhard";
             CurrentPerson.Age = 60;
@@ -63,9 +65,11 @@ namespace CompareObj
             Console.ReadKey();
         }
 
-        public class Person
+        private class Person
         {
             public int PersonId { get; set; }
+
+            public Status Status { get; set; } = Status.InAktiv;
 
             public string Name { get; set; }
 
@@ -78,7 +82,7 @@ namespace CompareObj
             public Dictionary<int,string> Roles { get; set; }
         }
 
-        public class Department
+        private class Department
         {
             public int DepartmentId { get; set; }
 
@@ -100,5 +104,13 @@ namespace CompareObj
 
             public string[] IgnorPropertiesAsArray { get { return IgnorProperties.ToArray(); } }
         }
+
+        private enum Status : int
+        {
+            None = 0,
+            Aktiv,
+            InAktiv
+        }
+
     }
 }

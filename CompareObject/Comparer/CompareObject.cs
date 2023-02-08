@@ -75,6 +75,10 @@ namespace CompareObj
                             string value = property.PropertyType.GetGenericArguments()[1].Name;
                             propertyType = $"Dictionary<{key},{value}>";
                         }
+                        else if (property.PropertyType.BaseType == typeof(Enum))
+                        {
+                            propertyType = $"Enum.{property.PropertyType.Name}";
+                        }
                         else
                         {
                             propertyType = property.PropertyType.Name;
@@ -82,7 +86,7 @@ namespace CompareObj
 
                         if (ignoreList == null)
                         {
-                            if (property.CanRead && property.GetGetMethod().GetParameters().Length == 0)
+                            if (property.CanRead && property.GetGetMethod().GetParameters().Any() == false)
                             {
                                 object firstValue = firstObj == null ? null : property.GetValue(firstObj, null);
                                 object secondValue = secondObj == null ? null :  property.GetValue(secondObj, null);
@@ -95,7 +99,7 @@ namespace CompareObj
                         }
                         else
                         {
-                            if (property.CanRead && property.GetGetMethod().GetParameters().Length == 0 && ignoreList.Contains(property.Name) == false)
+                            if (property.CanRead && property.GetGetMethod().GetParameters().Any() == false && ignoreList.Contains(property.Name) == false)
                             {
                                 object firstValue = property.GetValue(firstObj, null);
                                 object secondValue = property.GetValue(secondObj, null);
