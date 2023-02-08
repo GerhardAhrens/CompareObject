@@ -39,4 +39,4 @@ foreach (CompareResult item in compareResult)
 <img src="./CompareObjectResult.png" style="hight:500; height: 80px;"/>
 
 Bisher funktioniert noch kein "Deep"-Compare, damit ist gemeint, das auch Objekte in Objekte und Collections auf Unterschiede geprüft werden.
-Ist in einem Objekt eine oder mehrere Collection definiert, wird hier der Count dazu ausgegeben.
+Ist in einem Objekt eine oder mehrere Collection definiert, wird dazu der Typ und Count ausgegeben.
