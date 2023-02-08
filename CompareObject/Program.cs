@@ -19,7 +19,7 @@ namespace CompareObj
     using System;
     using System.Security;
 
-    public class Program
+    public partial class Program
     {
         private static void Main(string[] args)
         {
@@ -64,53 +64,5 @@ namespace CompareObj
 
             Console.ReadKey();
         }
-
-        private class Person
-        {
-            public int PersonId { get; set; }
-
-            public Status Status { get; set; } = Status.InAktiv;
-
-            public string Name { get; set; }
-
-            public int Age { get; set; }
-
-            public DateTime? MeetingDate { get; set; }
-
-            public List<Department> Department { get; set; }
-
-            public Dictionary<int,string> Roles { get; set; }
-        }
-
-        private class Department
-        {
-            public int DepartmentId { get; set; }
-
-            public string DepartmentName { get; set; }
-        }
-
-        private class IgnorWords
-        {
-            public IgnorWords()
-            {
-                if (this.IgnorProperties == null)
-                {
-                    this.IgnorProperties = new List<string>();
-                    this.IgnorProperties.Add("Age");
-                }
-            }
-
-            public List<string> IgnorProperties { get; private set; }
-
-            public string[] IgnorPropertiesAsArray { get { return IgnorProperties.ToArray(); } }
-        }
-
-        private enum Status : int
-        {
-            None = 0,
-            Aktiv,
-            InAktiv
-        }
-
     }
 }

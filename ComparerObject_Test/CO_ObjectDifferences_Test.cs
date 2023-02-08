@@ -4,7 +4,7 @@ namespace EasyPrototypingTest
 {
 
     [TestClass]
-    public class ComparerObjectDifferences_Test
+    public class CO_ObjectDifferences_Test
     {
         [TestMethod]
         public void ComparerObjectWithNullObject_EqualsTrue()
@@ -212,76 +212,6 @@ namespace EasyPrototypingTest
             List<CompareResult> compareResult = CompareObject.GetDifferences(p1, p2);
             Assert.IsNotNull(compareResult);
             Assert.IsTrue(compareResult.Count == 2);
-        }
-
-        [TestMethod]
-        public void ComparerObjectWithTwoObjectAndList3_EqualsFalse()
-        {
-            Person p1 = new Person();
-            p1.PersonId = 12;
-            p1.Name = "Gerhard";
-            p1.Age = 58;
-            p1.MeetingDate = null;
-
-            Person p2 = new Person();
-            p2.PersonId = 12;
-            p2.Name = "Gerhard";
-            p2.Age = 58;
-            p2.MeetingDate = null;
-
-            Department dept1 = new Department();
-            dept1.DepartmentId = 1;
-            dept1.DepartmentName = "Development";
-            List<Department> deptList1 = new List<Department>();
-            deptList1.Add(dept1);
-            p1.Department = deptList1;
-
-            Department dept2 = new Department();
-            dept2.DepartmentId = 2;
-            dept2.DepartmentName = "Development";
-            List<Department> deptList2 = new List<Department>();
-            deptList2.Add(dept2);
-            p2.Department = deptList2;
-
-            List<CompareResult> compareResult = CompareObject.GetDifferences(p1, p2);
-            Assert.IsNotNull(compareResult);
-            Assert.IsTrue(compareResult.Count == 1);
-        }
-
-        private class Person
-        {
-            public int PersonId { get; set; }
-
-            public string Name { get; set; }
-
-            public int Age { get; set; }
-
-            public DateTime? MeetingDate { get; set; }
-
-            public List<Department> Department { get; set; }
-        }
-
-        private class Department
-        {
-            public int DepartmentId { get; set; }
-
-            public string DepartmentName { get; set; }
-        }
-
-        private class IgnorWords 
-        {
-            public IgnorWords()
-            {
-                if (this.IgnorProperties == null)
-                {
-                    this.IgnorProperties = new List<string>();
-                    this.IgnorProperties.Add("Age");
-                }
-            }
-
-            public List<string> IgnorProperties { get; private set; }
-
-            public string[] IgnorPropertiesAsArray { get { return IgnorProperties.ToArray(); } }
         }
     }
 }
